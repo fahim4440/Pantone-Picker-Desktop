@@ -25,8 +25,21 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Pantone Book')),
-      body: const Center(
-        child: Text('No image selected.'),
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(Icons.person),
+              Text("Hi, Ahmadul"),
+            ],
+          ),
+          TextField(),
+          Center(
+            child: Text('No image selected.'),
+          ),
+        ],
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
