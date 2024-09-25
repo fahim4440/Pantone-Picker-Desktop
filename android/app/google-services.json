@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "690047837688",
+    "project_id": "pantone-book",
+    "storage_bucket": "pantone-book.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690047837688:android:7d57cda7e5362af0cce20d",
+        "android_client_info": {
+          "package_name": "com.af.pantone_book"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdi9eAG2-7Tuj-3T7rcp1PAQpBv_jQQj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
