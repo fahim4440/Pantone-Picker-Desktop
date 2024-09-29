@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import '../screens/color_picker_from_image.dart';
 import 'package:image/image.dart' as img;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ImageRepository {
   Future<void> pickImageFromCamera(BuildContext context) async {
@@ -49,5 +50,15 @@ class ImageRepository {
     compressedFile.writeAsBytesSync(compressedBytes);
 
     return compressedFile;
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    bool? isLoggedIn = preferences.getBool('loggedIn');
+    if(isLoggedIn == null) {
+      return false;
+    } else {
+      return isLoggedIn;
+    }
   }
 }

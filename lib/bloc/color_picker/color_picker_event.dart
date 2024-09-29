@@ -25,13 +25,11 @@ sealed class ColorPickerEvent extends Equatable {
 class ColorPickedEvent extends ColorPickerEvent {
   final File image;
   final Offset position;
-  final PhotoViewController photoViewController;
   final ScrollController scrollController;
   final BuildContext context;
 
-  const ColorPickedEvent(this.image, this.position, this.photoViewController, this.scrollController, this.context);
+  const ColorPickedEvent(this.image, this.position, this.scrollController, this.context);
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [image, position, photoViewController, scrollController, context];
+  List<Object?> get props => [image, position, scrollController, context];
 }

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../model/pantone_model.dart';
-import 'package:photo_view/photo_view.dart';
 import '../bloc/color_picker/color_picker_bloc.dart';
 import '../widgets/color_card.dart';
 
@@ -11,7 +10,6 @@ class ColorPickerFromImage extends StatelessWidget {
   File image;
   ColorPickerFromImage(this.image, {super.key});
 
-  final PhotoViewController _photoViewController = PhotoViewController();
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -33,14 +31,14 @@ class ColorPickerFromImage extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTapDown: (details) {
-                            context.read<ColorPickerBloc>().add(ColorPickedEvent(image, details.localPosition, _photoViewController, _scrollController, context));
+                            context.read<ColorPickerBloc>().add(ColorPickedEvent(image, details.localPosition, _scrollController, context));
                           },
                           child: Image.file(image),
                         ),
                         Positioned(
-                          left: state.position.dx - 20,
+                          left: state.position.dx,
                           top: state.position.dy - 40,
-                          child: const Icon(Icons.location_pin, size: 40, color: Colors.red,),
+                          child: const Icon(Icons.colorize, size: 40, color: Colors.red,),
                         ),
                       ]
                     ),
@@ -71,7 +69,7 @@ class ColorPickerFromImage extends StatelessWidget {
               controller: _scrollController,
               child: GestureDetector(
                 onTapDown: (details) {
-                  context.read<ColorPickerBloc>().add(ColorPickedEvent(image, details.localPosition, _photoViewController, _scrollController, context));
+                  context.read<ColorPickerBloc>().add(ColorPickedEvent(image, details.localPosition, _scrollController, context));
                   },
                 child: Image.file(image),
               ),

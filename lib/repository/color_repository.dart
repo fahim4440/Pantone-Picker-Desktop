@@ -2,11 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:pantone_book/model/pantone_model.dart';
-import 'package:photo_view/photo_view.dart';
 import '../services/pantone_database/pantone_db.dart';
 
 class ColorRepository {
-  Future<img.Pixel> onTapDown(File file, Offset localPosition, PhotoViewController photoViewController, ScrollController scrollController, BuildContext context) async {
+  Future<img.Pixel> onTapDown(File file, Offset localPosition, ScrollController scrollController, BuildContext context) async {
 
     final img.Image? image = img.decodeImage(await file.readAsBytes());
 
@@ -15,50 +14,50 @@ class ColorRepository {
       final RenderBox box = context.findRenderObject() as RenderBox;
       final Size imageSize = box.size;
 
-      double zoomScale = photoViewController.scale ?? 1.0;
-      print("Zoom scale is $zoomScale");
+      // double zoomScale = photoViewController.scale ?? 1.0;
+      // print("Zoom scale is $zoomScale");
+      //
+      // // Calculate scale ratio of the displayed image vs. actual image dimensions
+      // double scaleX = image.width / imageSize.width;
+      // double scaleY = image.height / imageSize.height;
+      //
+      // // Use the correct scale factor (if the image might scale differently in width and height)
+      // double scale = scaleX > scaleY ? scaleX : scaleY;
+      // print('Normal scaling is $scaleX');
+      //
+      // // Print debug information
+      // print('Local Tap Position: ${localPosition.dx}, ${localPosition.dy}');
+      // print('Image Size on Screen: ${imageSize.width}, ${imageSize.height}');
+      //
+      // // Get the scroll offset
+      // double scrollOffset = scrollController.offset;
+      //
+      // Offset position = photoViewController.position;
+      // print('Zoom Tap Position: ${position.dx}, ${position.dy}');
+      //
+      // // Adjust the touch coordinates based on scale and position
+      // double x = (localPosition.dx + ((zoomScale - 1) * image.width) / 2 + position.dx) * scaleX;
+      // double y = (localPosition.dy + ((zoomScale - 1) * image.height) / 2 - position.dy) * scaleX;
+      //
+      // print('Mapped Coordinates (with zoom scaling): $x, $y');
+      // print('Scroll Offset: $scrollOffset');
+      // print('Original Image Size: ${image.width}, ${image.height}');
 
-      // Calculate scale ratio of the displayed image vs. actual image dimensions
+
+      // Original Without Zoom
       double scaleX = image.width / imageSize.width;
-      double scaleY = image.height / imageSize.height;
-
-      // Use the correct scale factor (if the image might scale differently in width and height)
-      double scale = scaleX > scaleY ? scaleX : scaleY;
-      print('Normal scaling is $scaleX');
-
-      // Print debug information
-      print('Local Tap Position: ${localPosition.dx}, ${localPosition.dy}');
-      print('Image Size on Screen: ${imageSize.width}, ${imageSize.height}');
+      print("Normal scale = $scaleX");
+      print('Local position: x=${localPosition.dx}, y=${localPosition.dy}');
+      print('Displayed Image size: ${imageSize.width}x${imageSize.height}');
+      print('Original Image size: ${image.width}x${image.height}');
 
       // Get the scroll offset
       double scrollOffset = scrollController.offset;
 
-      Offset position = photoViewController.position;
-      print('Zoom Tap Position: ${position.dx}, ${position.dy}');
-
-      // Adjust the touch coordinates based on scale and position
-      double x = (localPosition.dx + ((zoomScale - 1) * image.width) / 2 + position.dx) * scaleX;
-      double y = (localPosition.dy + ((zoomScale - 1) * image.height) / 2 - position.dy) * scaleX;
-
-      print('Mapped Coordinates (with zoom scaling): $x, $y');
-      print('Scroll Offset: $scrollOffset');
-      print('Original Image Size: ${image.width}, ${image.height}');
-
-
-      //Original Without Zoom
-      // double scaleX = image.width / imageSize.width;
-      // print("Normal scale = $scaleX");
-      // print('Local position: x=${localPosition.dx}, y=${localPosition.dy}');
-      // print('Displayed Image size: ${imageSize.width}x${imageSize.height}');
-      // print('Original Image size: ${image.width}x${image.height}');
-      //
-      // // Get the scroll offset
-      // double scrollOffset = _scrollController.offset;
-      //
-      // // Get x, y coordinates relative to image resolution
-      // int x = (localPosition.dx * scaleX).toInt();
-      // int y = ((localPosition.dy) * scaleX).toInt();
-      // print('Mapped: x=$x, y=$y');
+      // Get x, y coordinates relative to image resolution
+      int x = (localPosition.dx * scaleX).toInt();
+      int y = ((localPosition.dy) * scaleX).toInt();
+      print('Mapped: x=$x, y=$y');
       // print(scrollOffset);
 
 
