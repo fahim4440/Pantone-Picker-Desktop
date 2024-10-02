@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:excel/excel.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:flutter/services.dart' show ByteData, rootBundle;
+import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'package:encrypt/encrypt.dart' as encrypt;
 import '../../model/pantone_model.dart';
 import 'pantone_db.dart';
 
@@ -36,18 +35,35 @@ class PantoneDBHelper {
   }
 
   Future<List<PantoneColor>> readPantoneColorsFromExcel() async {
-    // Load the Excel file from the assets
-    ByteData data = await rootBundle.load('assets/Pantone_RGB.xlsx');
+    //Decrypt the file first
+    final key = encrypt.Key.fromUtf8('e7f8G2J9xA3mW5nK8dQ1rT6vB4yP0zZ2');
 
-    // Write the file to a temporary location because the 'excel' package works with files
-    var bytes = data.buffer.asUint8List();
-    var tempDir = await getTemporaryDirectory();
-    File tempFile = File('${tempDir.path}/pantone_colors.xlsx');
-    await tempFile.writeAsBytes(bytes, flush: true);
+    // Get the Downloads directory to read the encrypted file
+    final ByteData encryptedFile = await rootBundle.load('assets/encrypted_file.enc');
+    final Uint8List encryptedBytes = encryptedFile.buffer.asUint8List();
+
+
+    // Read the encrypted data
+    final iv = encrypt.IV(encryptedBytes.sublist(0, 16));
+    final encryptedData = encryptedBytes.sublist(16);
+
+    // Decrypt the data
+    final encrypter = encrypt.Encrypter(encrypt.AES(key));
+    final decrypted = encrypter.decryptBytes(encrypt.Encrypted(encryptedData), iv: iv);
+
+
+    // // Load the Excel file from the assets
+    // ByteData data = await rootBundle.load('assets/encrypted_file.enc');
+    //
+    // // Write the file to a temporary location because the 'excel' package works with files
+    // var bytes = data.buffer.asUint8List();
+    // var tempDir = await getTemporaryDirectory();
+    // File tempFile = File('${tempDir.path}/pantone_colors.xlsx');
+    // await tempFile.writeAsBytes(bytes, flush: true);
 
     // Read the Excel file
     // final bytes = excelFile.readAsBytesSync();
-    final excel = Excel.decodeBytes(bytes);
+    final excel = Excel.decodeBytes(decrypted);
 
     List<PantoneColor> pantoneColors = [];
 

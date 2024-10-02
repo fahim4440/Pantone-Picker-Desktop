@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantone_book/bloc/signin/signin_bloc.dart';
 import 'package:pantone_book/screens/homepage.dart';
+import 'package:pantone_book/widgets/contact_footer.dart';
 import 'signup_page.dart';
 import 'package:lottie/lottie.dart';
 
@@ -55,6 +56,10 @@ class SigninPage extends StatelessWidget {
                     ],
                   ),
                   _ErrorMessage(),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ContactFooter(),
                 ],
               ),
             ),
@@ -185,12 +190,42 @@ class SigninButton extends StatelessWidget {
     return BlocListener<SigninBloc, SigninState>(
       listener: (context, state) {
         if (state.isSuccess) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Homepage()),
-              (Route<dynamic> route) => false,
-          );
+          if (state.isEmailVerified) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Homepage(name: state.email,)),
+                  (Route<dynamic> route) => false,
+            );
+          } else {
+            showDialog(
+              barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Email is not verified.',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          context.read<SigninBloc>().add(SigninResendEmailVerificationEvent());
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Resend Email'),
+                      ),
+                    ],
+                  );
+                }
+            );
+          }
         }
       },
       child: BlocBuilder<SigninBloc, SigninState>(

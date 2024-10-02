@@ -17,8 +17,8 @@ Column ColorCard(PantoneColor color) {
         color: Color.fromARGB(200, color.red, color.green, color.blue),
         child: Center(child: Text("${color.red}, ${color.green}, ${color.blue}", style: const TextStyle(fontSize: 12.0),)),
       ),
-      color.pantoneCode == "" ? const SizedBox() : Text(color.pantoneCode),
-      Text(color.colorName),
+      color.pantoneCode == "" ? const SizedBox() : SelectableText(color.pantoneCode),
+      SelectableText(color.colorName),
     ],
   );
 }

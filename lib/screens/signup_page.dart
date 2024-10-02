@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pantone_book/bloc/signup/signup_bloc.dart';
 import 'package:pantone_book/screens/signin_page.dart';
+import 'package:pantone_book/widgets/contact_footer.dart';
 import 'homepage.dart';
 
 class SignupPage extends StatelessWidget {
@@ -34,6 +35,10 @@ class SignupPage extends StatelessWidget {
                   const SizedBox(
                     height: 30.0,
                   ),
+                  const CompanyNameInput(),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   const EmailInput(),
                   const SizedBox(
                     height: 30,
@@ -59,6 +64,8 @@ class SignupPage extends StatelessWidget {
                     ],
                   ),
                   _ErrorMessage(),
+                  const SizedBox(height: 10.0,),
+                  ContactFooter(),
                 ],
               ),
             ),
@@ -82,7 +89,7 @@ class UserNameInput extends StatelessWidget {
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
             errorText: !state.isValidName && state.username.isNotEmpty
-                ? 'Give proper name'
+                ? 'Give full name'
                 : null,
             prefixIcon: const Icon(Icons.person),
             enabledBorder: const OutlineInputBorder(
@@ -102,6 +109,51 @@ class UserNameInput extends StatelessWidget {
             ),
             focusColor: Colors.blueGrey,
             labelText: "Full Name",
+            labelStyle: const TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 20.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CompanyNameInput extends StatelessWidget {
+  const CompanyNameInput({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SignupBloc, SignupState>(
+      builder: (context, state) {
+        return TextField(
+          onChanged: (companyName) =>
+              context.read<SignupBloc>().add(SignupCompanyNameChanged(companyName)),
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            errorText: !state.isValidCompanyName && state.companyName.isNotEmpty
+                ? 'Give full company name'
+                : null,
+            prefixIcon: const Icon(Icons.work),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent, width: 6.0),
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20.0),
+                bottomLeft: Radius.circular(20.0),
+              ),
+            ),
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(20.0),
+                topLeft: Radius.circular(0.0),
+                bottomRight: Radius.circular(0.0),
+                bottomLeft: Radius.circular(20.0),
+              ),
+            ),
+            focusColor: Colors.blueGrey,
+            labelText: "Company Name",
             labelStyle: const TextStyle(
               color: Colors.blueGrey,
               fontSize: 20.0,
@@ -182,7 +234,7 @@ class _PasswordInputState extends State<PasswordInput> {
         obscureText: !_showPassword,
         decoration: InputDecoration(
           errorText: !state.isValidPassword && state.password.isNotEmpty
-              ? 'Password is not valid'
+              ? 'Password length must be at least 7'
               : null,
           prefixIcon: const Icon(Icons.lock_outline),
           suffixIcon: Padding(
@@ -229,11 +281,33 @@ class SignupButton extends StatelessWidget {
     return BlocListener<SignupBloc, SignupState>(
       listener: (context, state) {
         if (state.isSuccess) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const Homepage()),
-                (Route<dynamic> route) => false,
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text(
+                  'Verification email is sent. Verify the email before sign in.',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SigninPage()),
+                            (Route<dynamic> route) => false,
+                      );
+                    },
+                    child: const Text('OK'),
+                  ),
+                ],
+              );
+            }
           );
         }
       },

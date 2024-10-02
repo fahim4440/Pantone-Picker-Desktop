@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../screens/color_picker_from_image.dart';
 import 'package:image/image.dart' as img;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,5 +61,31 @@ class ImageRepository {
     } else {
       return isLoggedIn;
     }
+  }
+
+  Future<String?> getUserNameFromSharedPrefs() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? name = preferences.getString('name');
+    return name;
+  }
+
+  Future<void> launchEmail() async {
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'ahmadul244@gmail.com',
+    );
+    await launchUrl(emailUri);
+  }
+
+  Future<void> launchLinkedIn() async {
+    const url = 'https://www.linkedin.com/in/ahmadul-ferdous';
+    Uri uri = Uri.parse(url);
+    await launchUrl(uri);
+  }
+
+  Future<void> launchFacebook() async {
+    const url = 'https://www.facebook.com/ahmadul.fahim';
+    Uri uri = Uri.parse(url);
+    await launchUrl(uri);
   }
 }

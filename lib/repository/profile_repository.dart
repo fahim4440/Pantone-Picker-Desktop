@@ -13,7 +13,9 @@ class ProfileRepository {
     String email = preferences.getString("email")!;
     String name = preferences.getString("name")!;
     bool loggedIn = preferences.getBool("loggedIn")!;
-    return UserModel(uid: uid, email: email, name: name, loggedIn: loggedIn);
+    String companyName = preferences.getString("companyName")!;
+    bool isEmailVerified = preferences.getBool("isEmailVerified")!;
+    return UserModel(uid: uid, email: email, name: name, loggedIn: loggedIn, companyName: companyName, isEmailVerified: isEmailVerified);
   }
 
   Future<void> signout() async {
@@ -23,9 +25,11 @@ class ProfileRepository {
       'loggedIn' : false,
     });
     await _firebaseAuth.signOut();
-    preferences.setString("email", "");
-    preferences.setString("name", "");
-    preferences.setString("uid", "");
-    preferences.setBool("loggedIn", false);
+    preferences.remove("email");
+    preferences.remove("name");
+    preferences.remove("uid");
+    preferences.remove("loggedIn");
+    preferences.remove("companyName");
+    preferences.remove("isEmailVerified");
   }
 }

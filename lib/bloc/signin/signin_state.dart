@@ -3,6 +3,7 @@ part of 'signin_bloc.dart';
 class SigninState {
   final String email;
   final String password;
+  final bool isEmailVerified;
   final bool isValidEmail;
   final bool isValidPassword;
   final bool isSubmitting;
@@ -13,6 +14,7 @@ class SigninState {
   SigninState({
     required this.email,
     required this.password,
+    required this.isEmailVerified,
     required this.isValidEmail,
     required this.isValidPassword,
     required this.isSubmitting,
@@ -25,6 +27,7 @@ class SigninState {
     return SigninState(
       email: '',
       password: '',
+      isEmailVerified: false,
       isValidEmail: false,
       isValidPassword: false,
       isSubmitting: false,
@@ -39,6 +42,7 @@ class SigninState {
   SigninState copyWith({
     String? email,
     String? password,
+    bool? isEmailVerified,
     bool? isValidEmail,
     bool? isValidPassword,
     bool? isSubmitting,
@@ -49,6 +53,7 @@ class SigninState {
     return SigninState(
       email: email ?? this.email,
       password: password ?? this.password,
+      isEmailVerified: isEmailVerified ?? this.isEmailVerified,
       isValidEmail: isValidEmail ?? this.isValidEmail,
       isValidPassword: isValidPassword ?? this.isValidPassword,
       isSubmitting: isSubmitting ?? this.isSubmitting,

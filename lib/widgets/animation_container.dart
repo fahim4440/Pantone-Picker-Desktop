@@ -10,9 +10,11 @@ Container AnimationContainer() {
       alignment: Alignment.center,
       child: AnimatedTextKit(
         animatedTexts: [
-          AnimatedTextWidget('You can search matching pantone colors'),
+          AnimatedTextWidget('You can search pantone colors'),
           AnimatedTextWidget('By Pantone Code'),
           AnimatedTextWidget('By Pantone Name'),
+          AnimatedTextWidget('AND'),
+          AnimatedTextWidget('Also can search closest pantone colors'),
           AnimatedTextWidget('By Image'),
         ],
         totalRepeatCount: 100,

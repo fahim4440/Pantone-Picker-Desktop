@@ -8,7 +8,13 @@ part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupBloc() : super(SignupState.initial()) {
+    on<SignupCompanyNameChanged>((event, emit) {
+      print("company");
+      emit(state.copyWith(companyName: event.companyName, isValidCompanyName: _isValidName(event.companyName)));
+    });
+
     on<SignupUsernameChanged>((event, emit) {
+      print("username");
       emit(state.copyWith(username: event.username, isValidName: _isValidName(event.username)));
     });
 
@@ -28,8 +34,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       try {
         if (state.isValidEmail && state.isValidPassword && state.isValidName) {
           SignupRepository repository = SignupRepository();
-          await repository.signupWithEmailAndLink(
-            state.username, state.email, state.password);
+          await repository.signupWithEmailAndLink(state.username, state.companyName, state.email, state.password);
           emit(state.copyWith(isSuccess: true, isSubmitting: false));
           emit(SignupState.initial());
         } else {

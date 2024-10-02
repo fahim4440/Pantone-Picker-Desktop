@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<CheckLoggedInBloc, CheckLoggedInState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              return const Homepage();
+              return Homepage(name: state.name,);
             } else if (state is LoggedOutState) {
               return const SigninPage();
             }

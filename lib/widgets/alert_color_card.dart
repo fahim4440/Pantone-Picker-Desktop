@@ -10,7 +10,7 @@ AlertDialog AlertColorCard(BuildContext context, PantoneColor color) {
       color: Color.fromARGB(255, color.red, color.green, color.blue),
       child: Align(
         alignment: Alignment.bottomCenter,
-        child: Text(
+        child: SelectableText(
           color.pantoneCode,
           style: const TextStyle(
             fontWeight: FontWeight.bold,

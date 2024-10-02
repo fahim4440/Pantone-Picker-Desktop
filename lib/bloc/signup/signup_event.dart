@@ -12,6 +12,14 @@ class SignupUsernameChanged extends SignupEvent {
   List<Object?> get props => [username];
 }
 
+class SignupCompanyNameChanged extends SignupEvent {
+  final String companyName;
+  const SignupCompanyNameChanged(this.companyName);
+
+  @override
+  List<Object?> get props => [companyName];
+}
+
 class SignupEmailChanged extends SignupEvent {
   final String email;
   const SignupEmailChanged(this.email);

@@ -10,13 +10,14 @@ final class CheckLoggedInInitial extends CheckLoggedInState {
 }
 
 final class LoggedInState extends CheckLoggedInState {
+  final String name;
+  const LoggedInState(this.name);
+
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 
 final class LoggedOutState extends CheckLoggedInState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }

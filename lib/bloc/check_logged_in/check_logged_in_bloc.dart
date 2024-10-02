@@ -11,8 +11,9 @@ class CheckLoggedInBloc extends Bloc<CheckLoggedInEvent, CheckLoggedInState> {
       try {
         ImageRepository repository = ImageRepository();
         bool isLoggedIn = await repository.isUserLoggedIn();
+        String? name = await repository.getUserNameFromSharedPrefs();
         if (isLoggedIn) {
-          emit(LoggedInState());
+          emit(LoggedInState(name!));
         } else {
           emit(LoggedOutState());
         }

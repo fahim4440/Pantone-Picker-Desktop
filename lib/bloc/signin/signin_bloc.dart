@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pantone_book/model/user_model.dart';
 import '../../repository/signin_repository.dart';
 
 part 'signin_event.dart';
@@ -23,11 +24,14 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       try {
         if (state.isValidEmail && state.isValidPassword) {
           SigninRepository repository = SigninRepository();
-          await repository.signInWithEmailAndPassword(
-              state.email, state.password);
-          print(state.isFailure);
-          emit(state.copyWith(isSuccess: true, isSubmitting: false, isFailure: false,));
-          emit(SigninState.initial());
+          UserModel user = await repository.signInWithEmailAndPassword(state.email, state.password);
+          if(user.isEmailVerified) {
+            //here using email to flow the name in HomePage
+            emit(state.copyWith(email: user.name, isSuccess: true, isSubmitting: false, isFailure: false, isEmailVerified: true));
+            emit(SigninState.initial());
+          } else {
+            emit(state.copyWith(email: state.email, password: state.password, isEmailVerified: false, isSuccess: true, isSubmitting: false));
+          }
         } else {
           throw ("Input email and password");
         }
@@ -40,6 +44,12 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         }
         emit(state.copyWith(isFailure: true, isSubmitting: false, errorMessage: errorMessage));
       }
+    });
+
+    on<SigninResendEmailVerificationEvent>((event, emit) async {
+      SigninRepository repository = SigninRepository();
+      await repository.resendEmail(state.email, state.password);
+      emit(state.copyWith(isEmailVerified: false, isSuccess: false, isSubmitting: false));
     });
   }
 }

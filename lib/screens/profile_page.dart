@@ -40,14 +40,14 @@ class ProfilePage extends StatelessWidget {
                           color: Color.fromARGB(255, 225, 237, 240),
                         ),
                         width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height - 200.0,
+                        height: MediaQuery.of(context).size.height - 325,
                         child: Column(
                           children: [
                             const SizedBox(height: 40.0,),
                             ProfileViewText(context, 'Account Details', FontWeight.bold, 20.0),
                             ProfileViewText(context, 'Name: ${state.user.name}', FontWeight.w600, 15.0),
                             ProfileViewText(context, 'Email: ${state.user.email}', FontWeight.w600, 15.0),
-                            const SizedBox(height: 40.0,),
+                            ProfileViewText(context, 'Company: ${state.user.companyName}', FontWeight.w600, 15.0),
                           ],
                         ),
                       ),
@@ -64,8 +64,6 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   BlocListener<ProfileBloc, ProfileState>(
                     listener: (context, state) {
-                      print(state);
-                      print(state.isSuccess);
                       if (state.isSuccess) {
                         Navigator.pushAndRemoveUntil(
                           context,

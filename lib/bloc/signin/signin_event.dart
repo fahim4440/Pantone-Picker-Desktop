@@ -12,6 +12,11 @@ class SigninEmailChanged extends SigninEvent {
   List<Object?> get props => [email];
 }
 
+class SigninResendEmailVerificationEvent extends SigninEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class SigninPasswordChanged extends SigninEvent {
   final String password;
   const SigninPasswordChanged({required this.password});
