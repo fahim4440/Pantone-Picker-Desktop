@@ -152,13 +152,13 @@ class _HomepageState extends State<Homepage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _selectedIndex == 0 ? FloatingActionButton(
         heroTag: 'fromGallery',
         onPressed: () {
           _imageRepository.pickImageFromGallery(context);
         },
         child: const Icon(Icons.image),
-      ),
+      ) : const SizedBox(),
     );
   }
 }

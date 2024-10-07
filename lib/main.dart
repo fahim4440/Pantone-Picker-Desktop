@@ -14,7 +14,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
   // Initialize the FFI database factory
-  databaseFactory = databaseFactoryFfi;
+  // databaseFactory = databaseFactoryFfi;
   
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(

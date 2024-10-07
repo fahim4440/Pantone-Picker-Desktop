@@ -11,16 +11,6 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 3.0,
-        backgroundColor: const Color.fromARGB(255, 225, 237, 240),
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -41,6 +31,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height - 325,
+                        padding: const EdgeInsets.all(30.0),
                         child: Column(
                           children: [
                             const SizedBox(height: 40.0,),

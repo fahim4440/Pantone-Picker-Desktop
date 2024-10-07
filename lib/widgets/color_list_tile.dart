@@ -11,15 +11,17 @@ Card ColorListTile(BuildContext context, PantoneColor color) {
       margin: const EdgeInsets.only(left: 15.0, right: 15.0),
       // width: MediaQuery.of(context).size.width,
       // height: 50.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(color.colorName, style: const TextStyle(fontSize: 30.0),),
-          const SizedBox(
-            height: 5.0,
-          ),
-          Text(color.pantoneCode),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(color.colorName, style: const TextStyle(fontSize: 30.0),),
+            const SizedBox(
+              height: 5.0,
+            ),
+            Text(color.pantoneCode),
+          ],
+        ),
       ),
     ),
   );
