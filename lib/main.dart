@@ -10,11 +10,16 @@ import 'firebase_options.dart';
 import 'bloc/signup/signup_bloc.dart';
 import 'bloc/profile/profile_bloc.dart';
 import 'bloc/check_logged_in/check_logged_in_bloc.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() async {
+  // Initialize the FFI database factory
+  databaseFactory = databaseFactoryFfi;
+  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -30,12 +35,14 @@ void main() async {
         create: (BuildContext context) => SigninBloc(),
       ),
       BlocProvider(
-        create: (BuildContext context) => ProfileBloc()..add(ProfilePageEnterEvent()),
+        create: (BuildContext context) =>
+            ProfileBloc()..add(ProfilePageEnterEvent()),
       ),
     ],
     child: const MyApp(),
   ));
 }
+
 // void main() async {
 //   runApp(MultiBlocProvider(
 //     providers: [
@@ -62,11 +69,15 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<CheckLoggedInBloc, CheckLoggedInState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              return Homepage(name: state.name,);
+              return Homepage(
+                name: state.name,
+              );
             } else if (state is LoggedOutState) {
               return const SigninPage();
             }
-            return const Center(child: CircularProgressIndicator(),);
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),

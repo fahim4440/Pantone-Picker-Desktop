@@ -74,23 +74,23 @@ class ColorPickerFromImage extends StatelessWidget {
                                   AlertDialog(
                                     title: Text(color.colorName, textAlign: TextAlign.center,),
                                     content: Container(
-                                      width: MediaQuery.of(context).size.width - 100.0,
-                                      height: 300.0,
+                                      width: MediaQuery.of(context).size.width - 300.0,
+                                      height: MediaQuery.of(context).size.height - 300.0,
                                       color: Color.fromARGB(255, color.red, color.green, color.blue),
                                       child: Column(
                                         children: [
                                           Align(
                                             alignment: Alignment.topCenter,
                                             child: Container(
-                                              height: 150.0,
-                                              width: MediaQuery.of(context).size.width - 100.0,
+                                              height: (MediaQuery.of(context).size.height - 300.0) / 2,
+                                              width: MediaQuery.of(context).size.width - 300.0,
                                               color: Color.fromARGB(255, state.pickedColor.red, state.pickedColor.green, state.pickedColor.blue),
                                               child: const Text("Touched", textAlign: TextAlign.center,),
                                             ),
                                           ),
                                           SizedBox(
-                                            width: MediaQuery.of(context).size.width - 100.0,
-                                            height: 150.0,
+                                            width: MediaQuery.of(context).size.width - 300.0,
+                                            height: (MediaQuery.of(context).size.height - 300.0) / 2,
                                             child: Align(
                                               alignment: Alignment.bottomCenter,
                                               child: SelectableText(

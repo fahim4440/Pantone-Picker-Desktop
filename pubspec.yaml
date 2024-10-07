@@ -51,6 +51,8 @@ dependencies:
   shared_preferences: ^2.3.2
   lottie: ^3.1.2
   url_launcher: ^6.3.0
+  sqflite_common_ffi: ^2.3.3+1
+  sqlite3_flutter_libs: ^0.5.24
 
 dev_dependencies:
   flutter_test:

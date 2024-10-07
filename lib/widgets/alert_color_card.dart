@@ -5,8 +5,8 @@ AlertDialog AlertColorCard(BuildContext context, PantoneColor color) {
   return AlertDialog(
     title: Text(color.colorName),
     content: Container(
-      width: MediaQuery.of(context).size.width - 100.0,
-      height: 300.0,
+      width: MediaQuery.of(context).size.width - 300.0,
+      height: MediaQuery.of(context).size.width - 300.0,
       color: Color.fromARGB(255, color.red, color.green, color.blue),
       child: Align(
         alignment: Alignment.bottomCenter,
